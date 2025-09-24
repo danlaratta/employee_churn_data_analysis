@@ -1,12 +1,12 @@
 from sqlalchemy import create_engine
-from config import DB_URL
+from . import config 
 import pandas as pd
 from typing import Literal
 
 
 # Create and return engine
 def get_engine(echo: bool = False):
-    return create_engine(DB_URL, echo=echo)
+    return create_engine(config.DB_URL, echo=echo)
 
 
 # Load clean dataframes into DB

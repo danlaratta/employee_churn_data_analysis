@@ -1,6 +1,4 @@
-from etl.clean_data import clean_employee_data, clean_store_data
-from etl.extract import get_raw_data
-from etl.load import export_dfs, load_to_postgres
+from etl import clean_employee_data, clean_store_data, get_raw_data, export_dfs, load_to_postgres
 
 # Pipeline Runner
 def main():

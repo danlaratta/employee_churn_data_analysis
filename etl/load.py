@@ -7,7 +7,7 @@ CLEAN_DATA_DIR = Path('data/cleaned')
 # Export clean dataframes to csv
 def export_dfs(dataframes: dict[str, pd.DataFrame], path: str, file_format: str, index: bool) -> None:
     for name, df in dataframes.items():
-        if file_format == 'csv':
+        if file_format == '.csv':
             df.to_csv(Path(path) / f'{name}_data_cleaned.csv', index= index)
         else:
             raise ValueError('Unsupported file format: must use .csv')

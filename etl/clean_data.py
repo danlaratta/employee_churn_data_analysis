@@ -30,11 +30,12 @@ def clean_employee_data(df: pd.DataFrame) -> pd.DataFrame:
     # lowercase all column names
     df.columns = df.columns.str.lower()
 
+
     # drop non-store columns
     df = df.drop([
         'birthdate_key', 'gender_full', 'termreason_desc', 'termtype_desc', 
         'business_unit', 'department_name', 'city_name', 'store_name'
-    ])
+    ], axis=1)
 
     # rename columns
     df = df.rename(columns={
@@ -45,13 +46,16 @@ def clean_employee_data(df: pd.DataFrame) -> pd.DataFrame:
         'length_of_service' : 'years_employed',
         'gender_short' : 'gender',
         'status' : 'employee_status',
-    }, axis=1)
+    })
 
     # Replace incorrect date with None
     df['date_terminated'] = df['date_terminated'].replace('1/1/1900', None)
 
-    # Fix date data type
-    cols = ['snapshot_date', 'date_hired', 'date_terminated']
+    # Remove time from the snapshot_record_year's date
+    df['snapshot_record_year'] = df['snapshot_record_year'].str.split('').str[0]
+
+    # Fix date format
+    cols = ['snapshot_record_year', 'date_hired', 'date_terminated']
     df[cols] = df[cols].apply(lambda x: pd.to_datetime(x, format='%m/%d/%Y'))
 
     return df
