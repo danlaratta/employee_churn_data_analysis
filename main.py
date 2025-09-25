@@ -8,7 +8,7 @@ def main():
     # Clean
     employee_data = clean_employee_data(raw_data)
     store_data = clean_store_data(raw_data)
-    dataframes = {'employee': employee_data, 'store': store_data}
+    dataframes = {'store': store_data, 'employees': employee_data}
 
     # Export and Load
     export_dfs(dataframes, 'data/cleaned', '.csv', False)

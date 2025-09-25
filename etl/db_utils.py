@@ -10,5 +10,5 @@ def get_engine(echo: bool = False):
 
 
 # Load clean dataframes into DB
-def write_df(df: pd.DataFrame, table_name: str, engine, if_exists: Literal['fail', 'replace', 'append'] = 'append') -> None:
+def write_df(df: pd.DataFrame, table_name: str, engine, if_exists: Literal['fail', 'append'] = 'append') -> None:
     df.to_sql(name= table_name, con=engine, index=False, if_exists=if_exists) # convert df into sql table and load into postgres

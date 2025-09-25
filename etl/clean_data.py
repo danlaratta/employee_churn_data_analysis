@@ -20,6 +20,9 @@ def clean_store_data(df: pd.DataFrame) -> pd.DataFrame:
         'store_name': 'store_id',
     })
 
+    # drop duplicates on primary key   
+    df = df.drop_duplicates(subset=['store_id'])
+
     return df
 
 
@@ -30,32 +33,31 @@ def clean_employee_data(df: pd.DataFrame) -> pd.DataFrame:
     # lowercase all column names
     df.columns = df.columns.str.lower()
 
-
     # drop non-store columns
     df = df.drop([
-        'birthdate_key', 'gender_full', 'termreason_desc', 'termtype_desc', 
-        'business_unit', 'department_name', 'city_name', 'store_name'
+        'birthdate_key', 'gender_short', 'termreason_desc', 'termtype_desc', 
+        'business_unit', 'department_name', 'city_name'
     ], axis=1)
 
     # rename columns
     df = df.rename(columns={
         'employeeid' : 'employee_id',
+        'store_name': 'store_id',
         'recorddate_key' : 'snapshot_record_year',
         'orighiredate_key' : 'date_hired',
         'terminationdate_key' : 'date_terminated',
         'length_of_service' : 'years_employed',
-        'gender_short' : 'gender',
+        'gender_full' : 'gender',
         'status' : 'employee_status',
     })
+
+    # drop duplicates
+    df = df.drop_duplicates(subset=['employee_id', 'store_id', 'snapshot_record_year'])
 
     # Replace incorrect date with None
     df['date_terminated'] = df['date_terminated'].replace('1/1/1900', None)
 
     # Remove time from the snapshot_record_year's date
-    df['snapshot_record_year'] = df['snapshot_record_year'].str.split('').str[0]
-
-    # Fix date format
-    cols = ['snapshot_record_year', 'date_hired', 'date_terminated']
-    df[cols] = df[cols].apply(lambda x: pd.to_datetime(x, format='%m/%d/%Y'))
+    df['snapshot_record_year'] = df['snapshot_record_year'].str.split(' ').str[0]
 
     return df
