@@ -1,4 +1,4 @@
-employee_id,snapshot_record_year,date_hired,date_terminated,age,years_employed,job_title,store_id,gender,status_year,employee_status
+employee_id,snapshot_record_date,date_hired,date_terminated,age,years_employed,job_title,store_id,gender,status_year,employee_status
 1318,12/31/2006,8/28/1989,,52,17,CEO,35,Male,2006,ACTIVE
 1318,12/31/2007,8/28/1989,,53,18,CEO,35,Male,2007,ACTIVE
 1318,12/31/2008,8/28/1989,,54,19,CEO,35,Male,2008,ACTIVE

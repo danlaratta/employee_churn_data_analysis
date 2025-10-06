@@ -43,7 +43,7 @@ def clean_employee_data(df: pd.DataFrame) -> pd.DataFrame:
     df = df.rename(columns={
         'employeeid' : 'employee_id',
         'store_name': 'store_id',
-        'recorddate_key' : 'snapshot_record_year',
+        'recorddate_key' : 'snapshot_record_date',
         'orighiredate_key' : 'date_hired',
         'terminationdate_key' : 'date_terminated',
         'length_of_service' : 'years_employed',
@@ -52,12 +52,12 @@ def clean_employee_data(df: pd.DataFrame) -> pd.DataFrame:
     })
 
     # drop duplicates
-    df = df.drop_duplicates(subset=['employee_id', 'store_id', 'snapshot_record_year'])
+    df = df.drop_duplicates(subset=['employee_id', 'store_id', 'snapshot_record_date'])
 
     # Replace incorrect date with None
     df['date_terminated'] = df['date_terminated'].replace('1/1/1900', None)
 
-    # Remove time from the snapshot_record_year's date
-    df['snapshot_record_year'] = df['snapshot_record_year'].str.split(' ').str[0]
+    # Remove time from the snapshot_record_date's date
+    df['snapshot_record_date'] = df['snapshot_record_date'].str.split(' ').str[0]
 
     return df
